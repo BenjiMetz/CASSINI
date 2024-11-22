@@ -2,3 +2,4 @@
 .idea
 api.py
 *.pyc
+venv

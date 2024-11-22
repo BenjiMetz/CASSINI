@@ -8,10 +8,10 @@ from matplotlib import pyplot as plt, image as mpimg
 import json
 from utils_json import *
 from google_utils import *
-
+from api import *
 # Function to download satellite image from Google Maps
 
-api_key = 'AIzaSyA9JxlsLRVuMvhYNnHOrY8DF4Yf0Xj5bX4'
+api_key = get_api()
 
 gen_test_data = 1  # set to zero to generate training data set
 

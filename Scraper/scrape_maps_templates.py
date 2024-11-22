@@ -169,7 +169,6 @@ for test_train in test_train_dir:
             base_path = os.getcwd()
 
             main_directory = os.path.dirname(base_path)
-            main_directory = base_path
 
             img_dir = os.path.join(main_directory, f'Data/train_label/train.json')
             with open(img_dir, "w") as json_file:
@@ -184,32 +183,31 @@ for test_train in test_train_dir:
     base_path = os.getcwd()
 
     # img_dir = os.path.join(base_path, f'Data/images_{test_train}')
-    # main_directory = os.path.dirname(base_path)
+    main_directory = os.path.dirname(base_path)
 
-    main_directory = base_path
     img_dir = os.path.join(main_directory, f'Data/map_train')
 
     files = os.listdir(img_dir)
 
     # augments data to remove google watermark by cropping the data
-    for file in files:
-        path = os.path.join(main_directory, f'Data/map_train/{file}')
-
-        img = Image.open(path)
-        img_cropped = img.crop((0, 0, 620, 620))
-
-        img_cropped.save(path)
-
-    img_dir = os.path.join(main_directory, f'Data/template_train')
-    files = os.listdir(img_dir)
-
-    # augments data to remove google watermark by cropping the data
-    for file in files:
-        path = os.path.join(main_directory, f'Data/template_train/{file}')
-        img = Image.open(path)
-        img_cropped = img.crop((0, 0, 620, 620))
-
-        img_cropped.save(path)
+    # for file in files:
+    #     path = os.path.join(main_directory, f'Data/map_train/{file}')
+    #
+    #     img = Image.open(path)
+    #     img_cropped = img.crop((0, 0, 620, 620))
+    #
+    #     img_cropped.save(path)
+    #
+    # img_dir = os.path.join(main_directory, f'Data/template_train')
+    # files = os.listdir(img_dir)
+    #
+    # # augments data to remove google watermark by cropping the data
+    # for file in files:
+    #     path = os.path.join(main_directory, f'Data/template_train/{file}')
+    #     img = Image.open(path)
+    #     img_cropped = img.crop((0, 0, 620, 620))
+    #
+    #     img_cropped.save(path)
 
 print('NE: ', getPointLatLng(w, 0))
 print('SW: ', getPointLatLng(0, h))

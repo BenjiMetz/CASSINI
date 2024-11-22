@@ -3,3 +3,4 @@
 api.py
 *.pyc
 venv
+Data/

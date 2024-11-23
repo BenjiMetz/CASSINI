@@ -8,3 +8,5 @@ opencv-python
 matplotlib
 torch
 torchvision
+ipykernel
+haversine

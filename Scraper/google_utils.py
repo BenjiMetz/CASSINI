@@ -28,7 +28,13 @@ def download_google_satellite_image(api_key, lat, lon, test_train, temp_map, zoo
 
         main_directory = os.path.dirname(base_path)
         # main_directory = base_path
-        img_dir = os.path.join(main_directory, f'Data/{temp_map}/{round(lat,6)}_{round(lon,6)}.png')
+        img_dir = os.path.join(main_directory, f'Data/{temp_map}')
+
+        if not os.path.exists(img_dir):
+            # Create the directory
+            os.makedirs(img_dir)
+
+        img_dir = os.path.join(main_directory, f'Data/{temp_map}/{round(lat, 6)}_{round(lon, 6)}.png')
 
         with open(img_dir, 'wb') as file:
             file.write(response.content)

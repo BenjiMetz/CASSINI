@@ -6,7 +6,7 @@ import requests
 import os
 from PIL import Image
 
-from Scraper.utils import lat_lng_to_bounds, adjust_gps_for_cropping
+from utils import lat_lng_to_bounds, adjust_gps_for_cropping
 
 
 def download_google_satellite_image(api_key, lat, lon, test_train, temp_map, zoom=17, width=640, height=640):

@@ -37,17 +37,19 @@ zoom_template = 18
 test_train_dir = ['train_template_matching', 'test_template_matching']
 # test_train_dir = ['train_template_matching']
 data = []
-training_size = 600
-test_size = 200
+training_size = 1000
+test_size = 300
 map_image = ''
 size = 0
+w = 640
+h = 640
 for test_train in test_train_dir:
     data = []
 
     pointLat, pointLng = 51.999080, 4.373749
-    r = lat_lng_to_bounds(pointLat, pointLng, zoom, 640, 640)
+    r = lat_lng_to_bounds(pointLat, pointLng, zoom, w, h)
     minx, maxx, miny, maxy = r[0][0], r[1][0], r[0][1], r[1][1]
-
+    # print(minx, maxx, miny, maxy)
     edge = (maxx - minx) / 16
     edgey = (maxy - miny) / 16
 
@@ -56,7 +58,7 @@ for test_train in test_train_dir:
     maxx = maxx - edge
     miny = miny + edgey
     maxy = maxy + edgey
-
+    print(minx, maxx, miny, maxy)
     x_bound = (((maxx - edge) - (minx + edge)) / 2 ** (zoom_template - zoom)) / 2
     y_bound = (((maxy - edgey) - (miny + edgey)) / 2 ** (zoom_template - zoom)) / 2
 
@@ -72,6 +74,7 @@ for test_train in test_train_dir:
     for i in range(size):
         x = round(random.uniform(minx, maxx), 6)
         y = round(random.uniform(miny, maxy), 6)
+
         X, Y = GenBoundingBox(x, y, pointLat, pointLng)
 
         temp_image = download_google_satellite_image(api_key, x, y, test_train, test_train,
@@ -82,8 +85,8 @@ for test_train in test_train_dir:
 
     base_path = os.getcwd()
 
-    #main_directory = os.path.dirname(base_path)
-    main_directory = base_path
+    main_directory = os.path.dirname(base_path)
+    # main_directory = base_path
     img_dir = os.path.join(main_directory, f'Data/labels')
     if not os.path.exists(img_dir):
         # Create the directory

@@ -5,6 +5,10 @@ from PIL import Image
 import requests
 import os
 from PIL import Image
+
+from Scraper.utils import lat_lng_to_bounds, adjust_gps_for_cropping
+
+
 def download_google_satellite_image(api_key, lat, lon, test_train, temp_map, zoom=17, width=640, height=640):
     # Construct the Google Maps Static API URL
     url = f"https://maps.googleapis.com/maps/api/staticmap"
@@ -33,7 +37,9 @@ def download_google_satellite_image(api_key, lat, lon, test_train, temp_map, zoo
         if not os.path.exists(img_dir):
             # Create the directory
             os.makedirs(img_dir)
-
+        r = lat_lng_to_bounds(lat, lon, zoom, width, height)
+        minx, maxx, miny, maxy = r[0][0], r[1][0], r[0][1], r[1][1]
+        lat, lon = adjust_gps_for_cropping(lat, lon, minx, maxx, miny, maxy, width, height, 0,20,0,20)
         img_dir = os.path.join(main_directory, f'Data/{temp_map}/{round(lat, 6)}_{round(lon, 6)}.png')
 
         with open(img_dir, 'wb') as file:

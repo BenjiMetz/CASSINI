@@ -2,7 +2,6 @@ import random
 
 import requests
 import numpy as np
-import pandas as pd
 import os
 import math
 from PIL import Image
@@ -38,8 +37,8 @@ zoom_template = 18
 test_train_dir = ['train_template_matching', 'test_template_matching']
 # test_train_dir = ['train_template_matching']
 data = []
-training_size = 60
-test_size = 20
+training_size = 600
+test_size = 200
 map_image = ''
 size = 0
 for test_train in test_train_dir:
@@ -83,8 +82,8 @@ for test_train in test_train_dir:
 
     base_path = os.getcwd()
 
-    main_directory = os.path.dirname(base_path)
-
+    #main_directory = os.path.dirname(base_path)
+    main_directory = base_path
     img_dir = os.path.join(main_directory, f'Data/labels')
     if not os.path.exists(img_dir):
         # Create the directory

@@ -26,8 +26,8 @@ def download_google_satellite_image(api_key, lat, lon, test_train, temp_map, zoo
 
         base_path = os.getcwd()
 
-        main_directory = os.path.dirname(base_path)
-        # main_directory = base_path
+        #main_directory = os.path.dirname(base_path)
+        main_directory = base_path
         img_dir = os.path.join(main_directory, f'Data/{temp_map}')
 
         if not os.path.exists(img_dir):

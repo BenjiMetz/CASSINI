@@ -6,7 +6,7 @@ import requests
 from api import get_api
 
 #Download image from google maps (600x600) with as basis the center of the map
-def download_google_satellite_image(api_key, lat, lon, zoom=17, width=640, height=640):
+def download_google_satellite_image(api_key, lat, lon, zoom=17, width=640, height=640, pixel=600):
 
     # Construct the Google Maps Static API URL
     url = f"https://maps.googleapis.com/maps/api/staticmap"
@@ -36,7 +36,7 @@ def download_google_satellite_image(api_key, lat, lon, zoom=17, width=640, heigh
         raise Exception(f"Error: {response.status_code}, {response.text}")
     
     img = Image.open(img_dir)
-    img_cropped = img.crop((20, 20, 620, 620))
+    img_cropped = img.crop(((640-pixel)/2, (640-pixel)/2, 640-(640-pixel)/2, 640-(640-pixel)/2))
     img_cropped.save(img_dir)
 
     return img_dir
@@ -54,22 +54,22 @@ def PxltoCoord(x, y, height, width, zoom, cntr_lat, cntr_lon):
     return (pointLat, pointLng)
 
 #Create template from smaller zoomed images, choose width and height as odd.
-def CreateTemplate(blockHeight, blockWidth, centreLat, centreLon, api_key, zoom):
-    imgTot = Image.new("RGB", (blockWidth*600, blockHeight*600))
+def CreateTemplate(blockHeight, blockWidth, centreLat, centreLon, api_key, zoom, pixel):
+    imgTot = Image.new("RGB", (blockWidth*pixel, blockHeight*pixel))
     for i in range(blockWidth):
         for j in range(blockHeight):
             print(i*blockHeight+(j+1), "/", blockHeight*blockWidth)
-            coordinate = PxltoCoord(300 + (i-(blockHeight-1)/2)*600, 300 + (j-(blockHeight-1)/2)*600, 600, 600, zoom, centreLat, centreLon)
-            img_dir = download_google_satellite_image(api_key, coordinate[0], coordinate[1], zoom, 640, 640)
+            coordinate = PxltoCoord(pixel/2 + (i-(blockHeight-1)/2)*pixel, pixel/2 + (j-(blockHeight-1)/2)*pixel, pixel, pixel, zoom, centreLat, centreLon)
+            img_dir = download_google_satellite_image(api_key, coordinate[0], coordinate[1], zoom, 640, 640, pixel)
             img = Image.open(img_dir)
-            imgTot.paste(img, (i*600, j*600))
+            imgTot.paste(img, (i*pixel, j*pixel))
             os.remove(img_dir)
     plt.imshow(imgTot)
     imgTot.save(f"Data\\{blockWidth}x{blockHeight}_{zoom}_Zoom_{centreLat}_{centreLon}.png")
 
-centreLat = 52.0128569238565
-centreLon = 4.355916744532585
-zoom = 17
+centreLat = 51.999080
+centreLon = 4.373749
+zoom = 19
 
-CreateTemplate(7,5,centreLat, centreLon, get_api(), zoom)
+CreateTemplate(25,25,centreLat, centreLon, get_api(), zoom, 384)
 

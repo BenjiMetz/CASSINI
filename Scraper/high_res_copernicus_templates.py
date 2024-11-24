@@ -4,6 +4,7 @@ from typing import Any, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+from os import getcwd
 
 def plot_image(
     image: np.ndarray,
@@ -20,7 +21,7 @@ def plot_image(
     ax.set_xticks([])
     ax.set_yticks([])
 
-#download template from copernicus 
+#download template from copernicus
 def downloadTemplate(config, time_interval, bbox, size, dir):
     evalscript_true_color = """
         //VERSION=3
@@ -50,6 +51,7 @@ def downloadTemplate(config, time_interval, bbox, size, dir):
                     "s2l1c", service_url=config.sh_base_url
                 ),
                 time_interval=time_interval,
+                other_args={"dataFilter": {"mosaickingOrder": "leastCC"}},
             )
         ],
         responses=[SentinelHubRequest.output_response("default", MimeType.PNG)],
@@ -70,14 +72,17 @@ config.sh_client_secret = 'JuVSW7csj3yTd3ZyUViWfTJUGMO8X3uh'
 config.sh_token_url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
 config.sh_base_url = "https://sh.dataspace.copernicus.eu"
 
-coordinates = (51, 4, 60, 13)
-time_interval = ("2016-06-12", "2024-06-13")
+coordinates = [4.360113, 51.991117, 4.387193, 52.006785] # EWI centered picture like maps image
+#  51.999080, 4.373749
+time_interval = ("2022-06-12", "2024-01-01")
 
-resolution = 200
+resolution = 0.75
 bbox = BBox(bbox=coordinates, crs=CRS.WGS84)
 size = bbox_to_dimensions(bbox, resolution)
-dir_root = 'C:\\Users\\timbe\\Documents\\GitHub\\CASSINI\\Data_Copernicus\\'
-dir = f"{dir_root}Appel.PNG"
+
+print(size)
+dir_root = getcwd()
+dir = f"{dir_root}/Appel.PNG"
 image = downloadTemplate(config, time_interval, bbox, size, dir)
 
 
@@ -101,6 +106,6 @@ image = downloadTemplate(config, time_interval, bbox, size, dir)
 
 # CreateTemplate(7,5,centreLat, centreLon, get_api(), zoom)
 
-def createTemplate(blockHeight, blockWidth):
-    imgTot = Image.new("RGB", ())
-    return 0
+# def createTemplate(blockHeight, blockWidth):
+#     imgTot = Image.new("RGB", ())
+#     return 0

@@ -1,0 +1,16 @@
+No offset:
+    Points used: 100
+    In meters: 34.33 error, 13.00 stddev
+    In pixels: 11.70 error, 4.42 stddev
+Unscaled offset:
+    Points used: 100
+    In meters: 114.43 error, 72.42 stddev
+    In pixels: 38.95 error, 24.65 stddev
+Scaled offset:
+    Points used: 100
+    In meters: 33.13 error, 7.13 stddev
+    In pixels: 11.29 error, 2.43 stddev
+
+With scaled offset, the error is generally in a single direction (both axes)
+The values of the calculated/predicted pixel is generally larger than
+the actual pixel value.

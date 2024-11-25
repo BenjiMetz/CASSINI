@@ -18,10 +18,6 @@ api_key = get_api()
 
 gen_test_data = 1  # set to zero to generate training data set
 
-# middle coorindates of region delft
-mid_lat = 51.998766
-mid_lon = 4.374169
-
 # image size in pixels
 w = 620
 h = 620
